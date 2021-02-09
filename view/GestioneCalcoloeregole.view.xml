@@ -1,0 +1,708 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:tnt="sap.tnt" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="vodafone.RepintHRAdmin.controller.GestioneCalcoloeregole">
+	<App>
+		<pages>
+			<Page title="{i18n>HRAdminApp}" showNavButton="true" navButtonPress="onPressRepintHome">
+				<content>
+					<IconTabBar id="idIconTabBarNoIcons" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding">
+						<items>
+							<IconTabFilter id="idFestivitaTab" text="{i18n>Festivita}">
+								<Table id="idTableFestivita" inset="false" headerText="{i18n>GiorniFestivita}" selectionChange="onRequestSelect" mode="None">
+									<columns>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="{i18n>MeseGiorni}" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="{i18n>Descrizione}" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<DatePicker id="idMeseGiorni" valueFormat="MM-dd" displayFormat="dd-MM" class="sapUiTinyMargin repintemployeeSpaceControl" width="13rem"
+													change="handleMeseGiorni" placeholder="Inserisci Mese Giorno"/>
+												<!--<DatePicker id="idMeseGiorni" valueFormat="MMdd" displayFormat="dd-MM" class="sapUiTinyMargin repintemployeeSpaceControl" width="13rem" change="handleMeseGiorni"
+													placeholder="Inserisci Mese Giorno"/>-->
+												<Input id="idDescrizione" maxLength="20" required="true"/>
+												<Button icon="sap-icon://sys-add" text="{i18n>FestivitaAggiungi}" type="Emphasized" enabled="{MainModel1>oButton1}" press="onAddFestiviItem"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+								<Table id="idTableFestivitaData" items="{FestiviModel>/}" inset="false" noDataText="{i18n>nodata}" growing="true" growingThreshold="1000"
+									growingScrollToLoad="true" mode="None">
+									<columns>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Right" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Left" demandPopin="true">
+											<Text text="" class="fontBoldClass"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<!--<Input textAlign="Center" width="10rem" value="{FestiviModel>MMGG}" enabled="false"/>-->
+												<DatePicker id="TPMMGG" valueFormat="MM-dd" displayFormat="dd-MM"  class="sapUiTinyMargin" value="{FestiviModel>MMGG}" width="13rem"
+													enabled="false" change="handleFestiviMeseGiorniDate" navigate="handleFestiviMeseGiorniOldDate" placeholder="Inserisci Mese Giorno"/>
+												<!--<DatePicker id="dpAnnoMese" class="sapUiTinyMargin" value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>-->
+												<Input textAlign="Left" width="16rem" value="{FestiviModel>DESCRIZIONE}" enabled="false"/>
+												<ToggleButton enabled="{FestiviModel>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditFestivi"/>
+												<Button enabled="{FestiviModel>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteFestivi"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</IconTabFilter>
+							<IconTabFilter id="idSantoPatronoTab" text="{i18n>Santopatrono}">
+								<Table id="idTableStabilimentiData" items="{StabilimentiModel>/}" inset="false" noDataText="{i18n>nodata}" growing="true"
+									growingThreshold="1000" growingScrollToLoad="true" mode="None">
+									<headerToolbar>
+										<OverflowToolbar>
+											<Title text="{i18n>Santopatrono}" textAlign="Center" level="H2"/>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="{i18n>Codice}" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="{i18n>GiornoMese}" class="fontBoldClass"/>
+										</Column>
+										<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+											<Text text="{i18n>Sede}" class="fontBoldClass"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<!--<Input textAlign="Left" width="15rem" value="{FestiviModel>DESCRIZIONE}" enabled="false"/>-->
+												<Text text="{StabilimentiModel>STABILIMENTO}"/>
+												<Text text="{StabilimentiModel>SANTO_PATRONO}"/>
+												<Text text="{StabilimentiModel>DESCR_STABILIMENTO}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</IconTabFilter>
+							<IconTabFilter id="idDateProcessoTab" text="{i18n>DateProcesso}">
+								<content>
+									<VBox>
+										<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+											<items>
+												<Label text="{i18n>MeseAnno}"/>
+												<DatePicker id="idmeseanno" displayFormat="MM-y" width="7rem" change="handleAnnoMeseChange"/>
+												<Label text="{i18n>Dipendente}"/>
+												<DatePicker id="idDipendenteDate" change="handleDipendenteDateChange" width="7rem" displayFormat="dd-MM" valueFormat="dd-MM"
+													navigate="navigateipendenteDate"/>
+												<!--<DatePicker value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>-->
+												<Label text="{i18n>Responsabile}"/>
+												<!--<DatePicker value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>-->
+												<DatePicker id="idResponsabile" change="handleResponsabileDateChange" width="7rem" displayFormat="dd-MM" valueFormat="dd-MM"
+													navigate="navigateResponsabileDate"/>
+											</items>
+										</FlexBox>
+										<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+											<items>
+												<Label text="{i18n>HR}"/>
+												<DatePicker id="idHRDateProcesso" change="handleHRDateChange" width="7rem" displayFormat="dd-MM" valueFormat="dd-MM"
+													navigate="navigateHRDate"/>
+												<!--<DatePicker id="idHR" value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>-->
+												<Label text="{i18n>InvioFlussiAuto}"/>
+												<DatePicker id="idInvioFlussiAuto" change="handleInvioFlussiAutoDateChange" width="7rem" displayFormat="dd-MM" valueFormat="dd-MM"
+													navigate="navigateInvioFlussiAutoDate"/>
+												<!--<DatePicker id="idInvioFlussiAuto" value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>-->
+												<Label/>
+												<Button type="Emphasized" text="{i18n>Inserisci}" press="onPressDateProcesso"
+													ariaDescribedBy="acceptButtonDescription genericButtonDescription"/>
+											</items>
+										</FlexBox>
+										<!--										<FlexBox alignItems="Start" justifyContent="End">
+											<items>
+												<Button type="Emphasized" text="{i18n>Inserisci}" press="onPress" ariaDescribedBy="acceptButtonDescription genericButtonDescription"/>
+												<Label text="{i18n>InvioFlussiAuto}"/>
+												<DatePicker value="" displayFormat="MM-y" width="10rem" change="handleAnnoMese"/>
+											</items>
+										</FlexBox>-->
+									</VBox>
+									<Table id="idTableDateProcessoData" items="{DatediprocessoModel>/}" inset="false" selectionChange="" mode="None" growing="true"
+										growingThreshold="200" growingScrollToLoad="true">
+										<columns>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>MeseAnno}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DipendenteCol}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>ResponsabileCol}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>HRCol}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>InvioFlussiAutoCol}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<DatePicker id="idMESEANNO" class="sapUiTinyMargin" value="{DatediprocessoModel>MESEANNO}" width="8rem" enabled="false" navigate=""
+														placeholder="Inserisci Mese Anno" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy" change="handleDateProcessoAnnoMeseChange"/>
+													<DatePicker id="idDIPENDENTE" class="sapUiTinyMargin" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy"
+														value="{DatediprocessoModel>DIPENDENTE}" width="8rem" enabled="false" navigate="" placeholder="Inserisci Dipendente"
+														change="handleDateProcessoDipendenteChange"/>
+													<DatePicker id="idRESPONSABILE" class="sapUiTinyMargin" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy"
+														value="{DatediprocessoModel>RESPONSABILE}" width="8rem" enabled="false" navigate="" placeholder="Select Responsabile"
+														change="handleDateProcessoResponsabileChange"/>
+													<DatePicker id="idHR" class="sapUiTinyMargin" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy" value="{DatediprocessoModel>HR}"
+														width="8rem" enabled="false" navigate="" placeholder="Select HR" change="handleDateProcessoHRChange"/>
+													<DatePicker id="idINVIO_FLUSSI" class="sapUiTinyMargin" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy"
+														value="{DatediprocessoModel>INVIO_FLUSSI}" width="8rem" enabled="false" navigate="" placeholder="Select Invio Flussi"
+														change="handleDateProcessoInvFluChange"/>
+													<ToggleButton enabled="{DatediprocessoModel>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditDatediprocesso"/>
+													<Button enabled="{DatediprocessoModel>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteDatediprocesso"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idImportiInterventiTab" text="{i18n>ImportiInterventi}">
+								<content>
+									<Table id="idTableImpInv" inset="false" headerText="{i18n>ImportiInterventi}" selectionChange="onRequestSelect" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>TipoGiorno}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Orainizio}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Orafine}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Valore}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<!--<Select id="idTipoCollection" forceSelection="false" selectedKey="{TipooModel>/SelectedTipo}"-->
+													<!--	items="{ path: 'TipooModel>/TipoGiornoCollection', sorter: { path: 'TipoGioId' } }" required="true">-->
+													<!--	<core:Item key="{TipooModel>TipoGioId}" text="{TipooModel>Value}"/>-->
+													<!--</Select>-->
+													<Select id="idTipoCollection" forceSelection="false" selectedKey="{TipooModel>/SelectedTipo}"
+														items="{ path: 'TipooModel>/', sorter: { path: 'IDTIPOGIORNO' } }" required="true">
+														<core:Item key="{TipooModel>IDTIPOGIORNO}" text="{TipooModel>TIPOGIORNO_DESC}"/>
+													</Select>
+													<TimePicker id="TP1" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="Inserisci Ora inizio"/>
+													<TimePicker id="TP2" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="Inserisci Ora fine"/>
+													<Input required="true"/>
+													<Select id="idLivelloCollection" forceSelection="false" selectedKey="{livelloModel>/SelectedLivello}"
+														items="{ path: 'livelloModel>/', sorter: { path: 'LIVELLO' } }" required="true">
+														<core:Item key="{livelloModel>LIVELLO}" text="{livelloModel>LIVELLO}"/>
+													</Select>
+													<Button icon="sap-icon://sys-add" text="{i18n>Aggiungi}" type="Emphasized" enabled="{MainModel1>oButton1}" press="onAddImpIntItem"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+									<Table id="idTableImpIntData" items="{ImpIntDataModel>/}" inset="false" noDataText="{i18n>nodata}" growing="true" growingThreshold="1000"
+										growingScrollToLoad="true" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>TipoGiorno}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Orainizio}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Orafine}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Valore}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Livello" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<Input value="{ImpIntDataModel>IDTIPOGIORNO}" enabled="false"/>
+													<Input value="{ImpIntDataModel>ORAINIZIO}" enabled="false"/>
+													<Input value="{ImpIntDataModel>ORAFINE}" enabled="false"/>
+													<Input value="{ImpIntDataModel>VALORE}" enabled="false"/>
+													<Input value="{ImpIntDataModel>LIVELLO}" enabled="false"/>
+													<ToggleButton enabled="{MainModel1>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditImpInt"/>
+													<Button enabled="{MainModel1>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteImpInt"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idImportiInterventiLPN" text="{i18n>ImportiInterventiLPN}">
+								<content>
+									<Table id="idTableInterLPN1" inset="false" headerText="{i18n>ImportiInterventiLPN}" selectionChange="onRequestSelect" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMinima}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMassima}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Valore}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<Select id="idDurataMinima" forceSelection="false" selectedKey="{minimaoModel>/SelectedMinima}"
+														items="{ path: 'minimaoModel>/MinimaCollection', sorter: { path: 'MinimaId' } }" required="true">
+														<core:Item key="{minimaoModel>MinimaId}" text="{minimaoModel>Value}"/>
+													</Select>
+													<Select id="idDurataMassima" forceSelection="false" selectedKey="{massimaoModel>/SelectedMassima}"
+														items="{ path: 'massimaoModel>/MassimaCollection', sorter: { path: 'MassimaId' } }" required="true">
+														<core:Item key="{massimaoModel>MassimaId}" text="{massimaoModel>Value}"/>
+													</Select>
+													<Input required="true"/>
+													<Select id="idLivelloCollectionLPN" forceSelection="false" selectedKey="{livelloModel>/SelectedLivello}"
+														items="{ path: 'livelloModel>/', sorter: { path: 'LIVELLO' } }" required="true">
+														<core:Item key="{livelloModel>LIVELLO}" text="{livelloModel>LIVELLO}"/>
+													</Select>
+													<Button icon="sap-icon://sys-add" text="{i18n>Aggiungi}" type="Emphasized" enabled="{MainModel1>oButton1}" press="onAddImpIntlpnItem"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+									<Table id="idTableLPNIntData1" items="{ImpIntLPNDataModel>/}" inset="false" noDataText="{i18n>nodata}" growing="true"
+										growingThreshold="1000" growingScrollToLoad="true" mode="None">
+										<columns>
+											<!--<Column minScreenWidth="Tablet" width="0.5rem" vAlign="Middle" hAlign="Center" demandPopin="true">-->
+											<!--	<Text text="" class="fontBoldClass"/>-->
+											<!--</Column>-->
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMinima}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMassima}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Valore}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<!--<Column minScreenWidth="Tablet" width="0.5rem" vAlign="Middle" hAlign="Center" demandPopin="true">-->
+											<!--	<Text text="Min Durata Min" class="fontBoldClass"/>-->
+											<!--</Column>-->
+											<!--<Column minScreenWidth="Tablet" width="0.5rem" vAlign="Middle" hAlign="Center" demandPopin="true">-->
+											<!--	<Text text="Min Durata Max" class="fontBoldClass"/>-->
+											<!--</Column>-->
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<Input value="{ImpIntLPNDataModel>DURATA_MIN}" enabled="false"/>
+													<Input value="{ImpIntLPNDataModel>DURATA_MAX}" enabled="false"/>
+													<Input value="{ImpIntLPNDataModel>VALORE}" enabled="false"/>
+													<Input value="{ImpIntLPNDataModel>LIVELLO}" enabled="false"/>
+													<ToggleButton enabled="{ImpIntLPNDataModel>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditLPN"/>
+													<Button enabled="{ImpIntLPNDataModel>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteLPN"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idImportiRepImp" text="{i18n>ImportiReperibillita}">
+								<content>
+									<Table id="idTableImpInvImp" inset="false" headerText="{i18n>ImportiReperibillita}" selectionChange="onRequestSelect" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>TipoGiorno}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Importo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<Select id="idTipoCollectionImp" forceSelection="false" selectedKey="{TipooModel2>/SelectedTipo}"
+														items="{ path: 'TipooModel2>/', sorter: { path: 'IDTIPOGIORNO' } }" required="true">
+														<core:Item key="{TipooModel2>IDTIPOGIORNO}" text="{TipooModel2>TIPOGIORNO_DESC}"/>
+													</Select>
+													<Input required="true" maxLength="5"/>
+													<Select id="idLivelloCollectionImp" forceSelection="false" selectedKey="{livelloModel1>/SelectedLivello}"
+														items="{ path: 'livelloModel1>/', sorter: { path: 'LIVELLO' } }" required="true">
+														<core:Item key="{livelloModel1>LIVELLO}" text="{livelloModel1>LIVELLO}"/>
+													</Select>
+													<Button icon="sap-icon://sys-add" text="{i18n>Aggiungi}" type="Emphasized" enabled="{MainModel1>oButton1}" press="onAddImpIntItemImp"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+									<Table id="idTableImpIntDataImp" items="{ImpIntDataImpModel>/}" inset="false" noDataText="{i18n>nodata}" growing="true"
+										growingThreshold="1000" growingScrollToLoad="true" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>TipoGiorno}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Valore}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="3rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<Input value="{ImpIntDataImpModel>GIORNI}" enabled="false"/>
+													<Input value="{ImpIntDataImpModel>IMPORTO}" enabled="false"/>
+													<Input value="{ImpIntDataImpModel>LIVELLO}" enabled="false"/>
+													<ToggleButton enabled="{ImpIntDataImpModel>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditImpInt1"/>
+													<Button enabled="{ImpIntDataImpModel>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteImpInt1"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idRegoleCompensativi" text="{i18n>RegoleCompensativi}">
+								<content>
+									<f:SimpleForm minWidth="1024" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" emptySpanL="0" emptySpanM="0"
+										columnsL="1" columnsM="1">
+										<f:content>
+											<VBox width="100%">
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="{i18n>TipoGiorno}" wrapping="true"/>
+													<Select id="idTipoCollectionImp7" forceSelection="false">
+														<core:Item key='1' text="Lunedì…Venerdì"/>
+														<core:Item key='5' text="Sabato, Domenica e Festivi"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Ora Inizio" class="OmnibaseNuovoMiddleSpace3" wrapping="true"/>
+													<TimePicker id="TPOrainizio" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="Inserisci Ora Inizio"/>
+													<Select id="idOraInizioIn" forceSelection="false">
+														<core:Item key="1" text="Inclusa"/>
+														<core:Item key="0" text="Escluso"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Ora Fine" class="OmnibaseNuovoMiddleSpace3" wrapping="true"/>
+													<TimePicker id="TPOraFine" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" placeholder="Inserisci Ora fine"/>
+													<Select id="idOraFineIn" forceSelection="false">
+														<core:Item key="1" text="Inclusa"/>
+														<core:Item key="0" text="Escluso"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Durata Minima" wrapping="true"/>
+													<Select id="idDurataMinima1" forceSelection="false" selectedKey="{minimaoModel>/SelectedMinima}"
+														items="{ path: 'minimaoModel>/MinimaCollection', sorter: { path: 'MinimaId' } }" required="true">
+														<core:Item key="{minimaoModel>MinimaId}" text="{minimaoModel>Value}"/>
+													</Select>
+													<Select id="iddurataMinimaIn" forceSelection="false">
+														<core:Item key="1" text="Inclusa"/>
+														<core:Item key="0" text="Escluso"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Durata Massima" wrapping="true"/>
+													<Select id="idDurataMassima1" forceSelection="false" selectedKey="{massimaoModel>/SelectedMassima}"
+														items="{ path: 'massimaoModel>/MassimaCollection', sorter: { path: 'MassimaId' } }" required="true">
+														<core:Item key="{massimaoModel>MassimaId}" text="{massimaoModel>Value}"/>
+													</Select>
+													<Select id="iddurataMassimaIn" forceSelection="false">
+														<core:Item key="1" text="Inclusa"/>
+														<core:Item key="0" text="Escluso"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Inclusione Durata" wrapping="true"/>
+													<Select id="idInclusioneDurataIn" forceSelection="false">
+														<core:Item key="1" text="Inclusa"/>
+														<core:Item key="0" text="Escluso"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Text width="7rem" text="Durata Riposo" wrapping="true"/>
+													<Select id="idDurataRiposoIn" forceSelection="false">
+														<core:Item key="0.25" text="2 Ore"/>
+														<core:Item key="0.5" text="4 Ore"/>
+														<core:Item key="1" text="8 Ore"/>
+													</Select>
+												</HBox>
+												<HBox class="RegoleHbox1">
+													<Button text="Salva" class="RegoleButton1" type="Accept" press="onAddRegoleItem"/>
+													<Button text="Cancella" class="RegoleButton2" type="Reject" press="onCancelRegoleItem"/>
+												</HBox>
+											</VBox>
+										</f:content>
+									</f:SimpleForm>
+									<Table id="idTableRegoleCompen" items="{oRegoleModel>/}" inset="false" selectionChange="onRequestSelect" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Giorni" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Durata" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Fascia Oraria" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Inclusione Durata" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="Riposo Compensativo" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<Text text="{oRegoleModel>GIORNI}"/>
+												<Text
+													text="{parts: ['oRegoleModel>DURATA_MIN', 'oRegoleModel>INCLUSO_DMIN', 'oRegoleModel>DURATA_MAX', 'oRegoleModel>INCLUSO_DMAX'], formatter: 'vodafone.RepintHRAdmin.util.Formatter.getDurata'}"/>
+												<Text
+													text="{parts: ['oRegoleModel>FASCIA_INIZIO', 'oRegoleModel>INCLUSO_FI', 'oRegoleModel>FASCIA_FINE', 'oRegoleModel>INCLUSO_FF'], formatter: 'vodafone.RepintHRAdmin.util.Formatter.getFascia'}"/>
+												<!--<Text text="{oRegoleModel>DURATA_INCLUSA}"/>-->
+												<CheckBox selected="{parts: ['oRegoleModel>DURATA_INCLUSA'], formatter: 'vodafone.RepintHRAdmin.util.Formatter.getCheck'}"/>
+												<Text text="{oRegoleModel>VALORE}"/>
+												<Button text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditRegole"/>
+												<Button text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteRegole"/>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idRegoleCompensativeMultipliTab" text="{i18n>RegoleCompensativeMultipli}">
+								<content>
+									<Table id="idRegoleCompensativeMultipli" items="{oRegoleCompensativeMultipliModel>/}" inset="false"
+										headerText="{i18n>RegoleCompensativeMultipli}" selectionChange="onRequestSelect" mode="None" noDataText="{i18n>nodata}" growing="true"
+										growingThreshold="1000" growingScrollToLoad="true">
+										<!--	<headerToolbar>
+											<OverflowToolbar>
+												<content>
+													<Title/>
+													<ToolbarSpacer/>
+													<Toolbar>
+														<Button text="Stampa" type="Emphasized" press="onPrintRegoleCompensativeMultipli"/>
+													</Toolbar>
+												</content>
+											</OverflowToolbar>
+										</headerToolbar>-->
+										<columns>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true" width="2rem">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true" width="7rem">
+												<Text text="{i18n>FasciaOraria}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true" width="2rem">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>NumeroInterventi}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>RiposoCompensativo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Button icon="sap-icon://print" text="{i18n>Stampa}" type="Emphasized" press="onPrintRegoleCompensativeMultipli"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<!--	<HBox enabled="false">-->
+													<Text text="[" class="textstyle sapUiTinyMarginEnd"/>
+													<TimePicker id="TPOraFin2e" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange"
+														value="{oRegoleCompensativeMultipliModel>FASCIA_INIZIO}" enabled="false"/>
+													<Text text=". . ." class="textstyle2 sapUiTinyMargin"/>
+													<TimePicker id="TPOraFin4e" valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange"
+														value="{oRegoleCompensativeMultipliModel>FASCIA_FINE}" enabled="false"/>
+													<Text text="]" class="textstyle sapUiTinyMarginBegin"/>
+													<!--	</HBox>-->
+													<Input type="Number" value="{oRegoleCompensativeMultipliModel>N_INTERVENTI}" enabled="false"/>
+													<Input type="Number" value="{oRegoleCompensativeMultipliModel>VALORE}" enabled="false"/>
+													<ToggleButton icon="sap-icon://edit" text="{i18n>Modifica}" type="Emphasized" enabled="{oRegoleCompensativeMultipliModel>oEdit}"
+														press="onModifyRegoleCompensativeMultipli"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+							<IconTabFilter id="idRegoleBlocco" text="{i18n>RegoleBlocco}">
+								<content>
+									<Table id="idTableRegoleBlocco" inset="false" headerText="{i18n>RegoleBlocco}" selectionChange="onRequestSelect" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Attivo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DataInizio}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DataFine}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>ImportoMassimo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMassimo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<CheckBox id="idCheckboxAttivo"/>
+													<Select id="idLivelloRegoleBlocco" forceSelection="false" selectedKey="{livelloModel1>/SelectedLivello}"
+														items="{ path: 'livelloModel1>/', sorter: { path: 'LIVELLO' } }" required="true">
+														<core:Item key="{livelloModel1>LIVELLO}" text="{livelloModel1>LIVELLO}"/>
+													</Select>
+													<DatePicker id="idDataInzio" value="{oRogoleBloccoModel>/DATAINIZIO}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy"/>
+													<DatePicker id="idDataFine" value="{oRogoleBloccoModel>/DATAFINE}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy"/>
+													<Input type="Number" value="{oRogoleBloccoModel>/IMPORTOMAX}"/>
+													<Input type="Number" value="{oRogoleBloccoModel>/GIORNIMAX}"/>
+													<Button icon="sap-icon://sys-add" text="{i18n>Aggiungi}" type="Emphasized" enabled="{MainModel1>oButton1}" press="onAddRogoleBlocco"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+									<Table id="idTableDataRegoleBlocco" items="{rogoleBloccoDataItems>/}" inset="false" noDataText="{i18n>nodata}" growing="true"
+										growingThreshold="1000" growingScrollToLoad="true" mode="None">
+										<columns>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Attivo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="1rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Livello}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DataInizio}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DataFine}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>ImportoMassimo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>DurataMassimo}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Modify}" class="fontBoldClass"/>
+											</Column>
+											<Column minScreenWidth="Tablet" width="2rem" vAlign="Middle" hAlign="Center" demandPopin="true">
+												<Text text="{i18n>Delete}" class="fontBoldClass"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<CheckBox enabled="false" selected="{= ${rogoleBloccoDataItems>ATTIVO} === 1}" id="idCheckBoxAttivoItem" select="onAttivoCheckboxSelect"/>
+													<Select id="idLivelloRegoleBloccoData" forceSelection="false" selectedKey="{rogoleBloccoDataItems>LIVELLO}"
+														items="{ path: 'livelloModel1>/', sorter: { path: 'LIVELLO' } }" enabled="false">
+														<core:Item key="{livelloModel1>LIVELLO}" text="{livelloModel1>LIVELLO}"/>
+													</Select>
+													<DatePicker id="idDataInzio2" value="{rogoleBloccoDataItems>DATAINIZIO}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" enabled="false"/>
+													<DatePicker id="idDataFine2" value="{rogoleBloccoDataItems>DATAFINE}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" enabled="false"/>
+													<Input type="Number" value="{rogoleBloccoDataItems>IMPORTOMAX}" enabled="false"/>
+													<Input type="Number" value="{rogoleBloccoDataItems>GIORNIMAX}" enabled="false"/>
+													<ToggleButton enabled="{rogoleBloccoDataItems>oEdit}" text="{i18n>Modifica}" width="6rem" icon="sap-icon://edit" press="onEditRogoleBlocco"/>
+													<Button enabled="{rogoleBloccoDataItems>oDelete}" text="{i18n>Elimina}" width="6rem" icon="sap-icon://delete" press="onDeleteRogoleBlocco"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</content>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,1 @@
+sap.ui.define(["vodafone/RepintHRAdmin/controller/GestioneCalcoloeregole.controller"],function(e){"use strict";QUnit.module("GestioneCalcoloeregole Controller");QUnit.test("I should test the GestioneCalcoloeregole controller",function(o){var n=new e;n.onInit();o.ok(n)})});
